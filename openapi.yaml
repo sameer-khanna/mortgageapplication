@@ -1,0 +1,111 @@
+openapi: 3.0.1
+info:
+  title: Barclays Mortgage Application
+  description: ''
+  contact:
+    email: sameerkhanna1185@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+paths:
+  /submitApplication:
+    post:
+      tags:
+      - Mortgage Application
+      summary: Add a new mortgage application to the store
+      operationId: submitApplication
+      requestBody:
+        description: Mortgage application that needs to be added to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Application'
+        required: true
+      responses:
+        200:
+          description: Application added successfully
+          content: {}      
+        405:
+          description: Invalid Request
+          content: {}
+      x-codegen-request-body-name: body
+  /updateApplication:
+    post:
+      tags:
+      - Mortgage Application
+      summary: Updates an existing mortgage application in the store
+      operationId: updateApplication
+      requestBody:
+        description: Mortgage application that needs to be updated to the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Application'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Application'
+        required: true
+      responses:
+        200:
+          description: Application updated successfully
+          content: {}      
+        405:
+          description: Invalid Request
+          content: {}
+      x-codegen-request-body-name: body      
+  /findApplications:
+    get:
+      tags:
+      - Mortgage Application
+      summary: Returns Mortgage Applications
+      operationId: findApplications
+      parameters:
+      - name: sortBy
+        in: query
+        description: Sort by this Parameter
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+        400:
+          description: Invalid Request
+          content: {}
+
+components:
+  schemas:
+    Application:
+      type: object
+      properties:
+        mortgageID:
+          type: string
+        version:
+          type: integer
+          format: int64
+        offerID:
+          type: string
+        productID:
+          type: string
+        offerDate:
+          type: string
+          format: date-time
+        createdDate:
+          type: string
+          format: date-time
+        offerExpired:
+          type: string          
+      xml:
+        name: Order
